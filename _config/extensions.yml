@@ -2,9 +2,13 @@
 Name: simplecspextensions
 ---
 
-SilverStripe\Control\Controller:
+SilverStripe\CMS\Controllers\ContentController:
   extensions:
-    - Toast\SimpleCSP\ControllerExtension
+    - Toast\SimpleCSP\ContentControllerExtension
+
+SilverStripe\CMS\Model\SiteTree:
+  extensions:
+    - Toast\SimpleCSP\SiteTreeExtension
 
 SilverStripe\SiteConfig\SiteConfig:
   extensions:

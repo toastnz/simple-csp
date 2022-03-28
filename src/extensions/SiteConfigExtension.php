@@ -20,7 +20,7 @@ class SiteConfigExtension extends DataExtension
 
         if (Permission::check('MANAGE_CSP_SOURCES')) {
             $fields->addFieldsToTab('Root.SimpleCSP', [
-                CheckboxField::create('SimpleCSPEnable', 'Enable Content-Security-Policy header')
+                CheckboxField::create('SimpleCSPEnable', 'Enable Content-Security-Policy header/meta tag')
                     ->setDescription('Please, make sure to set up and test the policies before enabling this option to prevent legit resources from being blocked.')
             ]);
         }

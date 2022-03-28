@@ -1,0 +1,8 @@
+---
+Name: simplecspconfig
+---
+
+SimpleCSP:
+  simple_csp_header: false
+  simple_csp_metatags: true
+
