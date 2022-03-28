@@ -1,0 +1,11 @@
+---
+Name: simplecspextensions
+---
+
+SilverStripe\Control\Controller:
+  extensions:
+    - Toast\SimpleCSP\ControllerExtension
+
+SilverStripe\SiteConfig\SiteConfig:
+  extensions:
+    - Toast\SimpleCSP\SiteConfigExtension
