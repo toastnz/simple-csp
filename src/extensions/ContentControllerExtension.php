@@ -2,13 +2,14 @@
 
 namespace Toast\SimpleCSP;
 
+use SilverStripe\Dev\Debug;
 use SilverStripe\Core\Extension;
 use SilverStripe\Control\Controller;
 use SilverStripe\Core\Config\Config;
+use SilverStripe\ORM\FieldType\DBText;
+use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\CMS\Controllers\ContentController;
-use SilverStripe\ORM\FieldType\DBField;
-use SilverStripe\ORM\FieldType\DBText;
 
 class ContentControllerExtension extends Extension
 {
@@ -21,6 +22,11 @@ class ContentControllerExtension extends Extension
                     if (SiteConfig::current_site_config()->SimpleCSPEnable) {
                         if ($headerValue = SimpleCSPHelper::getPolicyValue()) {
                             $this->owner->getResponse()->addHeader('Content-Security-Policy', $headerValue);
+                        }
+                        if ($headerValues = SimpleCSPHelper::getStandaloneHeaderPolicyValues()) {
+                            foreach ($headerValues as $key => $headerValue) {
+                                $this->owner->getResponse()->addHeader($key, $headerValue);
+                            }
                         }
                     }
                 }
