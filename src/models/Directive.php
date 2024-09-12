@@ -23,7 +23,8 @@ class Directive extends DataObject implements PermissionProvider
         'AllowSource' => 'Enum("*,self,none", "*")',
         'AllowUnsafeInline' => 'Boolean',
         'AllowUnsafeEval' => 'Boolean',
-        'Enable' => 'Boolean'
+        'Enable' => 'Boolean',
+        'isStandaloneHeader' => 'Boolean'
     ];
 
     private static $many_many = [
@@ -96,7 +97,9 @@ class Directive extends DataObject implements PermissionProvider
             CheckboxField::create('AllowUnsafeInline', 'Allow \'unsafe-inline\''),
             CheckboxField::create('AllowUnsafeEval', 'Allow \'unsafe-eval\''),
             CheckboxField::create('Enable', 'Enable directive'),
-            CheckboxSetField::create('Sources', 'Sources', Source::get()->map())
+            CheckboxSetField::create('Sources', 'Sources', Source::get()->map()),
+            CheckboxField::create('isStandaloneHeader', 'Allows this Source to be a custom header')
+                ->setDescription('Important: Use only if your sure of the header type and values'),
         ]);
 
         return $fields;
@@ -134,6 +137,40 @@ class Directive extends DataObject implements PermissionProvider
     public function getPolicy()
     {
         $policy = $this->Value;
+
+        if ($this->AllowSource) {
+
+            if ($this->AllowSource == '*') {
+                $policy .= ' *';
+            } else {
+                $policy .= ' ' . '\'' . $this->AllowSource . '\'';
+            }
+        }
+
+        foreach($this->Sources() as $source) {
+            if (trim($source->Value)) {
+                $policy .= ' ' . $source->Value;
+
+                if ($source->SubdomainWildcard) {
+                    $policy .= ' *.' . $source->Value;
+                }
+            }
+        }
+
+        if ($this->AllowUnsafeInline) {
+            $policy .= ' ' . '\'unsafe-inline\'';
+        }
+
+        if ($this->AllowUnsafeEval) {
+            $policy .= ' ' . '\'unsafe-eval\'';
+        }
+
+        return $policy;
+    }
+
+    public function getOnlyDirectivePolicy()
+    {
+        $policy = '';
 
         if ($this->AllowSource) {
 
