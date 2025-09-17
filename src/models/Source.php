@@ -6,9 +6,10 @@ use SilverStripe\ORM\DataObject;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Security\Permission;
-use SilverStripe\Forms\RequiredFields;
 use SilverStripe\Forms\CheckboxSetField;
 use SilverStripe\Security\PermissionProvider;
+use SilverStripe\Forms\Validation\CompositeValidator;
+use SilverStripe\Forms\Validation\RequiredFieldsValidator;
 
 class Source extends DataObject implements PermissionProvider
 {
@@ -64,12 +65,17 @@ class Source extends DataObject implements PermissionProvider
         }
     }
 
-    public function getCMSValidator()
+    public function getCMSCompositeValidator(): CompositeValidator
     {
-        return RequiredFields::create([
+        $validator = parent::getCMSCompositeValidator();
+
+        $validator->addValidator(RequiredFieldsValidator::create([
             'Value'
-        ]);
+        ]));
+        
+        return $validator;
     }
+
 
     public function providePermissions()
     {

@@ -16,7 +16,7 @@ class ContentControllerExtension extends Extension
     public function onBeforeInit()
     {
         if (Config::inst()->get('SimpleCSP', 'simple_csp_header')) {
-            if (Controller::has_curr()) {
+            if (Controller::curr()) {
                 if (Controller::curr() instanceof ContentController) {
                     if (SiteConfig::current_site_config()->SimpleCSPEnable) {
                         if ($headerValue = SimpleCSPHelper::getPolicyValue()) {

@@ -2,13 +2,13 @@
 
 namespace Toast\SimpleCSP;
 
+use SilverStripe\Core\Extension;
 use SilverStripe\Forms\FieldList;
-use SilverStripe\ORM\DataExtension;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Security\Permission;
 
 
-class SiteConfigExtension extends DataExtension
+class SiteConfigExtension extends Extension
 {
 
     private static $db = [

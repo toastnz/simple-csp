@@ -7,11 +7,12 @@ use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\Security\Permission;
 use SilverStripe\Forms\OptionsetField;
-use SilverStripe\Forms\RequiredFields;
 use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\Forms\CheckboxSetField;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\Security\PermissionProvider;
+use SilverStripe\Forms\Validation\CompositeValidator;
+use SilverStripe\Forms\Validation\RequiredFieldsValidator;
 
 class Directive extends DataObject implements PermissionProvider
 {
@@ -111,12 +112,17 @@ class Directive extends DataObject implements PermissionProvider
         }
     }
 
-    public function getCMSValidator()
+    public function getCMSCompositeValidator(): CompositeValidator
     {
-        return RequiredFields::create([
+        $validator = parent::getCMSCompositeValidator();
+
+        $validator->addValidator(RequiredFieldsValidator::create([
             'Value'
-        ]);
+        ]));
+        
+        return $validator;
     }
+
 
     public function requireDefaultRecords()
     {

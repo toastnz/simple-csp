@@ -17,8 +17,8 @@
         }
     ],
     "require": {
-        "silverstripe/cms": "^4 || ^5",
-        "silverstripe/framework": "^4 || ^5",
+        "silverstripe/cms": "^6",
+        "silverstripe/framework": "^6",
         "composer/installers": "*"
     },
     "minimum-stability": "dev",

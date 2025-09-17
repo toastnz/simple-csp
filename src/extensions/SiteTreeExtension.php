@@ -2,13 +2,13 @@
 
 namespace Toast\SimpleCSP;
 
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\SiteConfig\SiteConfig;
 
-class SiteTreeExtension extends DataExtension
+class SiteTreeExtension extends Extension
 {
-    public function MetaTags(&$tagString)
+    public function updateMetaTags(&$tagString)
     {
         if (SiteConfig::current_site_config()->SimpleCSPEnable) {
             if (Config::inst()->get('SimpleCSP', 'simple_csp_metatags')) {

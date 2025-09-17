@@ -4,8 +4,8 @@ Allow for management and injection of CSP headers
 
 ## Requirements
 
-* silverstripe/cms ^4.3.x
-* silverstripe/framework ^4.3.x
+* silverstripe/cms ^6
+* silverstripe/framework ^6
 
 ## Installation
 
