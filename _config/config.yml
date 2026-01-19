@@ -3,6 +3,6 @@ Name: simplecspconfig
 ---
 
 SimpleCSP:
-  simple_csp_header: false
-  simple_csp_metatags: true
+  simple_csp_headers: true
+  simple_csp_metatags: false
 

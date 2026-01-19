@@ -33,7 +33,8 @@ class Directive extends DataObject implements PermissionProvider
 
     private static $summary_fields = [
         'Title' => 'Title',
-        'PolicyForSummary' => 'Policy'
+        'PolicyForSummary' => 'Policy',
+        'Enable.Nice' => 'Enabled'
     ];
 
     private static $searchable_fields = [
