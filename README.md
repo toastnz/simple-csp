@@ -17,3 +17,16 @@ composer require toastnz/simple-csp
 
 Configure rules and enable CSP headers within the CMS.
 
+Note: if enabling 'nonce' support, ensure that your templates use the `$CSPNonceAttr` template global to add the nonce attribute to any inline scripts or styles, e.g.
+
+```html
+<script {$CSPNonceAttr}>
+    // inline script content
+</script>
+
+<style {$CSPNonceAttr}>
+    /* inline style content */
+</style>
+```
+
+

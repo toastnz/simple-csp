@@ -3,29 +3,26 @@
 namespace Toast\SimpleCSP;
 
 use SilverStripe\Core\Extension;
-use SilverStripe\Control\Controller;
 use SilverStripe\Core\Config\Config;
-use SilverStripe\SiteConfig\SiteConfig;
-use SilverStripe\CMS\Controllers\ContentController;
-use SilverStripe\ORM\FieldType\DBField;
 use SilverStripe\ORM\FieldType\DBText;
+use SilverStripe\ORM\FieldType\DBField;
+use SilverStripe\SiteConfig\SiteConfig;
 
 class ContentControllerExtension extends Extension
 {
 
     public function onBeforeInit()
     {
-        if (Config::inst()->get('SimpleCSP', 'simple_csp_headers')) {
-            if (Controller::curr()) {
-                if (Controller::curr() instanceof ContentController) {
-                    if (SiteConfig::current_site_config()->SimpleCSPEnable) {
-                        if ($headerValue = SimpleCSPHelper::getPolicyValue()) {
-                            $this->owner->getResponse()->addHeader('Content-Security-Policy', $headerValue);
-                        }
-                    }
+        $this->owner->getRequest()->getSession()->set('CSPNonce', bin2hex(random_bytes(16)));
+
+        if (SiteConfig::current_site_config()->SimpleCSPEnable) {
+            if (Config::inst()->get('SimpleCSP', 'simple_csp_headers')) {    
+                if ($headerValue = SimpleCSPHelper::getPolicyValue()) {
+                    $this->owner->getResponse()->addHeader('Content-Security-Policy', $headerValue);
                 }
             }
         }
+
     }
 
     public function getSimpleCSPMeta()
